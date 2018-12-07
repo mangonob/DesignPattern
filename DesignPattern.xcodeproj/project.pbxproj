@@ -16,6 +16,7 @@
 		4A12EBE221B914C60088C493 /* AbstractFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A12EBE121B914C60088C493 /* AbstractFactory.swift */; };
 		4A12EBE421B922060088C493 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A12EBE321B922060088C493 /* Command.swift */; };
 		4A12EBE621B928B10088C493 /* Iterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A12EBE521B928B10088C493 /* Iterator.swift */; };
+		4A8DC41921BA6B7500B972FA /* Composite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8DC41821BA6B7500B972FA /* Composite.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +42,7 @@
 		4A12EBE121B914C60088C493 /* AbstractFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractFactory.swift; sourceTree = "<group>"; };
 		4A12EBE321B922060088C493 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		4A12EBE521B928B10088C493 /* Iterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Iterator.swift; sourceTree = "<group>"; };
+		4A8DC41821BA6B7500B972FA /* Composite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Composite.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 				4A12EBE121B914C60088C493 /* AbstractFactory.swift */,
 				4A12EBE321B922060088C493 /* Command.swift */,
 				4A12EBE521B928B10088C493 /* Iterator.swift */,
+				4A8DC41821BA6B7500B972FA /* Composite.swift */,
 				4A04E64E21B7AF5B002E91B7 /* main.swift */,
 			);
 			path = DesignPattern;
@@ -148,6 +151,7 @@
 				4A04E65921B7BE4A002E91B7 /* Observer.swift in Sources */,
 				4A12EBE021B907A00088C493 /* FactoryMethod.swift in Sources */,
 				4A04E64F21B7AF5B002E91B7 /* main.swift in Sources */,
+				4A8DC41921BA6B7500B972FA /* Composite.swift in Sources */,
 				4A04E65B21B7C5A6002E91B7 /* Protocol.swift in Sources */,
 				4A12EBE621B928B10088C493 /* Iterator.swift in Sources */,
 				4A12EBE221B914C60088C493 /* AbstractFactory.swift in Sources */,
