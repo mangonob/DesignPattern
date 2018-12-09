@@ -8,36 +8,104 @@
 
 import Foundation
 
-class Iterator<Element> {
-    func first() { }
-    func next() { }
-    func isDone() -> Bool { return true }
-    func currentItem() -> Element { fatalError() }
+protocol Iterator {
+    associatedtype Element
+    
+    func first()
+    func next()
+    func isDone() -> Bool
+    func currentItem() -> Element?
 }
 
 protocol Iteratable {
-    associatedtype Element
-    func createIterator() -> Iterator<Element>
+    associatedtype Element where Element == Self.IteratorType.Element
+    associatedtype IteratorType: Iterator
+
+    func createIterator() -> Self.IteratorType
 }
 
 extension BaseGlyph: Iteratable {
     typealias Element = Glyph
-    
-    func createIterator() -> Iterator<Glyph> {
-        fatalError()
+
+    func createIterator() -> AnyIterator<Element> {
+        return AnyIterator(ListIterator(children))
     }
 }
 
-class ListIterator<Element>: Iterator<Element> {
+struct AnyIterator<E>: Iterator {
+    typealias Element = E
+
+    init<T: Iterator>(_ iterator: T) where T.Element == Element {
+    }
+
+    func first() {
+    }
+
+    func next() {
+    }
+    
+    func currentItem() -> E? {
+        return nil
+    }
+    
+    func isDone() -> Bool {
+        return true
+    }
+}
+
+class ListIterator<E>: Iterator {
+    typealias Element = E
     private var content: [Element]
+    private var current: Int = 0
     
     init(_ content: [Element]) {
         self.content = content
     }
+    
+    func first() {
+        current = 0
+    }
+    
+    func next() {
+        current += 1
+    }
+    
+    func currentItem() -> Element? {
+        return content[current]
+    }
+    
+    func isDone() -> Bool {
+        return current >= content.count
+    }
 }
 
-class PreorderIterator<Element>: Iterator<Element> {
-    init(_ root: Glyph) {
-        super.init()
+class PreorderIterator<T: Iteratable>: Iterator {
+    typealias Element = T.Element
+    
+    let root: T
+
+    init(_ root: T) {
+        self.root = root
+    }
+    
+    func first() {
+    }
+    
+    func next() {
+    }
+    
+    func currentItem() -> T.Element? {
+        fatalError()
+    }
+    
+    func isDone() -> Bool {
+        fatalError()
+    }
+}
+
+struct IteratorRoutine: Routine {
+    static func perform() {
+        let iterator = BaseGlyph.init().createIterator()
+        print(iterator)
     }
 }
