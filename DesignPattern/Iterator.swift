@@ -18,10 +18,10 @@ protocol Iterator {
 }
 
 protocol Iteratable {
-    associatedtype Element where Element == Self.IteratorType.Element
+    associatedtype Element where Self.IteratorType.Element == Element
     associatedtype IteratorType: Iterator
 
-    func createIterator() -> Self.IteratorType
+    func createIterator() -> IteratorType
 }
 
 extension BaseGlyph: Iteratable {
@@ -95,19 +95,25 @@ class PreorderIterator<T: Iteratable>: Iterator {
     typealias Element = T.Element
     
     let root: T
+    private var iterators: [AnyIterator<Element>]
 
     init(_ root: T) {
         self.root = root
+        iterators = [AnyIterator<Element>]()
     }
     
     func first() {
+        let iterator = root.createIterator()
+        iterator.first()
+        iterators.removeAll()
+        iterators.append(AnyIterator(iterator))
     }
     
     func next() {
     }
     
     func currentItem() -> T.Element? {
-        fatalError()
+        return nil
     }
     
     func isDone() -> Bool {
