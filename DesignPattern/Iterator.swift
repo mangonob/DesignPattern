@@ -103,10 +103,6 @@ class PreorderIterator<T: Iteratable>: Iterator {
     }
     
     func first() {
-        let iterator = root.createIterator()
-        iterator.first()
-        iterators.removeAll()
-        iterators.append(AnyIterator(iterator))
     }
     
     func next() {
@@ -117,7 +113,7 @@ class PreorderIterator<T: Iteratable>: Iterator {
     }
     
     func isDone() -> Bool {
-        fatalError()
+        return true
     }
 }
 
