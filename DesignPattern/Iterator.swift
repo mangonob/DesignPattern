@@ -35,21 +35,32 @@ extension BaseGlyph: Iteratable {
 struct AnyIterator<E>: Iterator {
     typealias Element = E
 
-    init<T: Iterator>(_ iterator: T) where T.Element == Element {
+    private var firstHandler: () -> Void
+    private var nextHandler: () -> Void
+    private var currentItemHandler: () -> E?
+    private var isDoneHandler: () -> Bool
+
+    init<T: Iterator>(_ base: T) where T.Element == Element {
+        firstHandler = base.first
+        nextHandler = base.next
+        currentItemHandler = base.currentItem
+        isDoneHandler = base.isDone
     }
 
     func first() {
+        firstHandler()
     }
 
     func next() {
+        nextHandler()
     }
     
     func currentItem() -> E? {
-        return nil
+        return currentItemHandler()
     }
     
     func isDone() -> Bool {
-        return true
+        return isDoneHandler()
     }
 }
 
@@ -71,6 +82,7 @@ class ListIterator<E>: Iterator {
     }
     
     func currentItem() -> Element? {
+        guard current >= 0 && current < content.count else { return nil }
         return content[current]
     }
     
@@ -105,7 +117,16 @@ class PreorderIterator<T: Iteratable>: Iterator {
 
 struct IteratorRoutine: Routine {
     static func perform() {
-        let iterator = BaseGlyph.init().createIterator()
-        print(iterator)
+        let glyph = BaseGlyph()
+        glyph.insert(BaseGlyph())
+        glyph.insert(BaseGlyph())
+        
+        let iterator = glyph.createIterator()
+        
+        iterator.first()
+        while !iterator.isDone() {
+            print(iterator.currentItem() as Any)
+            iterator.next()
+        }
     }
 }
