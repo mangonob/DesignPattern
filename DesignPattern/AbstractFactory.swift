@@ -8,66 +8,162 @@
 
 import Foundation
 
-protocol GUIFactory {
-    func createScrollBar() -> ScrollBar
-    func createButton() -> Button
-    func createMenu() -> Menu
+class MapSite {
+    func enter() { }
 }
 
-class ScrollBar { }
-class Button { }
-class Menu { }
-
-class MotifScrollBar: ScrollBar { }
-class MotifButton: Button { }
-class MotifMenu: Menu { }
-
-class PMScrollBar: ScrollBar { }
-class PMButton: Button { }
-class PMMenu: Menu { }
-
-class MacScrollBar: ScrollBar { }
-class MacButton: Button { }
-class MacMenu: Menu { }
-
-class MotifFactory: GUIFactory {
-    func createScrollBar() -> ScrollBar {
-        return MotifScrollBar()
+class Room: MapSite {
+    enum Side: Int{
+        case north
+        case south
+        case east
+        case west
     }
     
-    func createButton() -> Button {
-        return MotifButton()
+    private (set) var roomNo: Int
+    
+    init(_ roomNo: Int) {
+        self.roomNo = roomNo
     }
     
-    func createMenu() -> Menu {
-        return MotifMenu()
+    private var sides = [MapSite?](repeating: nil, count: 4)
+    
+    func setSide(_ side: Side, mapSite: MapSite?) {
+        sides[side.rawValue] = mapSite
+    }
+    
+    func mapSite(at side: Side) -> MapSite? {
+        return sides[side.rawValue]
     }
 }
 
-class PMFactory: GUIFactory {
-    func createScrollBar() -> ScrollBar {
-        return PMScrollBar()
+class Wall: MapSite {
+}
+
+class Door: MapSite {
+    var room1: Room?
+    var room2: Room?
+    
+    init(room1: Room? = nil, room2: Room? = nil) {
+        self.room1 = room1
+        self.room2 = room2
     }
     
-    func createButton() -> Button {
-        return PMButton()
-    }
-    
-    func createMenu() -> Menu {
-        return PMMenu()
+    func otherSideFrom(side: Room?) -> Room? {
+        guard let side = side else { return nil }
+        if side === room1 {
+            return room2
+        } else if side === room2 {
+            return room1
+        } else {
+            return nil
+        }
     }
 }
 
-class MacFactory: GUIFactory {
-    func createScrollBar() -> ScrollBar {
-        return MacScrollBar()
+class Maze {
+    private var rooms = [Int: Room]()
+    
+    func addRoom(_ room: Room) {
+        rooms[room.roomNo] = room
     }
     
-    func createButton() -> Button {
-        return MacButton()
+    func room(ofNo no: Int) -> Room? {
+        return rooms[no]
+    }
+}
+
+class MazeFactory {
+    func makeMaze() -> Maze {
+        return Maze()
     }
     
-    func createMenu() -> Menu {
-        return MacMenu()
+    func makeWall() -> Wall {
+        return Wall()
+    }
+    
+    func makeRoom(withNo no: Int) -> Room {
+        return Room(no)
+    }
+    
+    func makeDoor(room1: Room?, room2: Room?) -> Door {
+        return Door(room1: room1, room2: room2)
+    }
+}
+
+class MazeGame {
+    func createMaze(factory: MazeFactory) -> Maze {
+        let maze = factory.makeMaze()
+        let room1 = factory.makeRoom(withNo: 1)
+        let room2 = factory.makeRoom(withNo: 2)
+        let door = factory.makeDoor(room1: room1, room2: room2)
+        
+        maze.addRoom(room1)
+        maze.addRoom(room2)
+        
+        room1.setSide(.north, mapSite: factory.makeWall())
+        room1.setSide(.east, mapSite: door)
+        room1.setSide(.south, mapSite: factory.makeWall())
+        room1.setSide(.west, mapSite: factory.makeWall())
+        room1.setSide(.north, mapSite: factory.makeWall())
+        room1.setSide(.east, mapSite: factory.makeWall())
+        room1.setSide(.west, mapSite: factory.makeWall())
+        room1.setSide(.west, mapSite: door)
+        
+        return maze
+    }
+}
+
+class Spell {
+}
+
+class EnchantRoom: Room {
+    private (set) var spell: Spell
+    
+    init(_ roomNo: Int, spell: Spell) {
+        self.spell = spell
+        super.init(roomNo)
+    }
+}
+
+class DoorNeedingSpell: Door {
+}
+
+class EnchantMazeFactory: MazeFactory {
+    override func makeRoom(withNo no: Int) -> Room {
+        return EnchantRoom(no, spell: castSpell())
+    }
+    
+    override func makeDoor(room1: Room?, room2: Room?) -> Door {
+        return DoorNeedingSpell(room1: room1, room2: room2)
+    }
+    
+    func castSpell() -> Spell {
+        return Spell()
+    }
+}
+
+class RoomWithABoom: Room {
+}
+
+class BoomedWall: Wall {
+}
+
+class BoomedMazeFactory: MazeFactory {
+    override func makeWall() -> Wall {
+        return BoomedWall()
+    }
+    
+    override func makeRoom(withNo no: Int) -> Room {
+        return RoomWithABoom(no)
+    }
+}
+
+struct AbstractFactoryRoutine: Routine {
+    static func perform() {
+        let game = MazeGame()
+        let factory = MazeFactory()
+        let maze = game.createMaze(factory: factory)
+        print(maze)
     }
 }
