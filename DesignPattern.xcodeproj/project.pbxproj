@@ -18,6 +18,7 @@
 		4A12EBE621B928B10088C493 /* Iterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A12EBE521B928B10088C493 /* Iterator.swift */; };
 		4A64F6B821C69E00002D7D51 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A64F6B721C69E00002D7D51 /* Builder.swift */; };
 		4A8DC41921BA6B7500B972FA /* Composite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8DC41821BA6B7500B972FA /* Composite.swift */; };
+		4A94102321C8FD2E007D9DD6 /* Prototype.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A94102221C8FD2E007D9DD6 /* Prototype.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,6 +46,7 @@
 		4A12EBE521B928B10088C493 /* Iterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Iterator.swift; sourceTree = "<group>"; };
 		4A64F6B721C69E00002D7D51 /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
 		4A8DC41821BA6B7500B972FA /* Composite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Composite.swift; sourceTree = "<group>"; };
+		4A94102221C8FD2E007D9DD6 /* Prototype.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prototype.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				4A12EBDF21B907A00088C493 /* FactoryMethod.swift */,
 				4A12EBE121B914C60088C493 /* AbstractFactory.swift */,
 				4A64F6B721C69E00002D7D51 /* Builder.swift */,
+				4A94102221C8FD2E007D9DD6 /* Prototype.swift */,
 				4A12EBE321B922060088C493 /* Command.swift */,
 				4A12EBE521B928B10088C493 /* Iterator.swift */,
 				4A8DC41821BA6B7500B972FA /* Composite.swift */,
@@ -157,6 +160,7 @@
 				4A04E64F21B7AF5B002E91B7 /* main.swift in Sources */,
 				4A8DC41921BA6B7500B972FA /* Composite.swift in Sources */,
 				4A04E65B21B7C5A6002E91B7 /* Protocol.swift in Sources */,
+				4A94102321C8FD2E007D9DD6 /* Prototype.swift in Sources */,
 				4A12EBE621B928B10088C493 /* Iterator.swift in Sources */,
 				4A12EBE221B914C60088C493 /* AbstractFactory.swift in Sources */,
 				4A12EBE421B922060088C493 /* Command.swift in Sources */,
