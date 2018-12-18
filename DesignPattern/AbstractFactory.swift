@@ -8,8 +8,12 @@
 
 import Foundation
 
-class MapSite {
+class MapSite: NSObject, NSCopying {
     func enter() { }
+    
+    func copy(with zone: NSZone? = nil) -> Any {
+        return classForCoder.alloc()
+    }
 }
 
 class Room: MapSite {
@@ -20,7 +24,7 @@ class Room: MapSite {
         case west
     }
     
-    private (set) var roomNo: Int
+    @objc private (set) var roomNo: Int
     
     init(_ roomNo: Int) {
         self.roomNo = roomNo
@@ -34,6 +38,13 @@ class Room: MapSite {
     
     func mapSite(at side: Side) -> MapSite? {
         return sides[side.rawValue]
+    }
+    
+    override func copy(with zone: NSZone?) -> Any {
+        let room = super.copy(with: zone) as! Room
+        room.roomNo = roomNo
+        room.sides = sides
+        return room
     }
 }
 
@@ -59,9 +70,16 @@ class Door: MapSite {
             return nil
         }
     }
+    
+    override func copy(with zone: NSZone?) -> Any {
+        let door = super.copy(with: zone) as! Door
+        door.room1 = room1
+        door.room2 = room2
+        return door
+    }
 }
 
-class Maze {
+class Maze: NSObject, NSCopying {
     private var rooms = [Int: Room]()
     
     func addRoom(_ room: Room) {
@@ -70,6 +88,16 @@ class Maze {
     
     func room(ofNo no: Int) -> Room? {
         return rooms[no]
+    }
+    
+    func copy(with zone: NSZone? = nil) -> Any {
+        let maze = classForCoder.alloc() as! Maze
+        maze.rooms = rooms
+        return maze
+    }
+    
+    override var description: String {
+        return "\(super.description)[Rooms: \(rooms)]"
     }
 }
 

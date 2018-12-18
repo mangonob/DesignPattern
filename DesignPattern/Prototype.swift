@@ -22,18 +22,32 @@ class MazePrototypeFactory: MazeFactory {
     }
     
     override func makeMaze() -> Maze {
-        fatalError()
+        return mazePrototype.copy() as! Maze
     }
     
     override func makeRoom(withNo no: Int) -> Room {
-        fatalError()
+        let room = roomPrototype.copy() as! Room
+        room.setValue(no, forKey: "roomNo")
+        return room
     }
     
     override func makeWall() -> Wall {
-        fatalError()
+        return wallPrototype.copy() as! Wall
     }
     
     override func makeDoor(room1: Room?, room2: Room?) -> Door {
-        fatalError()
+        let door = doorPrototype.copy() as! Door
+        door.room1 = room1
+        door.room2 = room2
+        return door
+    }
+}
+
+struct PrototypeRoutine: Routine {
+    static func perform() {
+        let game = MazeGame()
+        let prototypeFactory = MazePrototypeFactory(maze: Maze(), room: RoomWithABoom(0), wall: BoomedWall(), door: Door())
+        let maze = game.createMaze(factory: prototypeFactory)
+        print(maze)
     }
 }
