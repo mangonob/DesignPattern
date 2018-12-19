@@ -101,7 +101,9 @@ class Maze: NSObject, NSCopying {
     }
 }
 
-class MazeFactory {
+class MazeFactory: NSObject {
+    private (set) static var shared = MazeFactory()
+
     func makeMaze() -> Maze {
         return Maze()
     }
