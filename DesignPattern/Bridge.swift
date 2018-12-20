@@ -8,7 +8,18 @@
 
 import Foundation
 
+class View {
+    func drawOn(_ window: Window) {
+    }
+}
+
 class Window {
+    private (set) var view: View
+    
+    init(_ view: View) {
+        self.view = view
+    }
+    
     internal var _imp: WindowImp!
     var imp: WindowImp {
         if _imp == nil {
@@ -17,7 +28,7 @@ class Window {
         return _imp
     }
 
-    func drawContent() { }
+    func drawContents() { }
     
     func open() { }
     
@@ -33,7 +44,9 @@ class Window {
     
     func drawLine(start: CGPoint, end: CGPoint) { }
     
-    func drawRect(start: CGPoint, end: CGPoint) { }
+    func drawRect(start: CGPoint, end: CGPoint) {
+        imp.deviceRect(CGRect(origin: start, size: CGSize(width: end.x - start.x, height: end.y - start.y)))
+    }
     
     func drawPolygon(points: [CGPoint]) { }
     
@@ -54,4 +67,54 @@ class WindowImp {
     func deviceText(_ text: String, origin: CGPoint) { }
     
     func deviceBitmap(_ text: [Int8], origin: CGPoint) { }
+}
+
+class ApplicationWindow: Window {
+    override func drawContents() {
+        view.drawOn(self)
+    }
+}
+
+class IconWindow: Window {
+    var bitMap: [Int8]?
+    
+    override func drawContents() {
+        if let bitMap = bitMap {
+            imp.deviceBitmap(bitMap, origin: CGPoint(x: 0, y: 0))
+        }
+    }
+}
+
+class Display {
+}
+
+class Drawable {
+}
+
+class GC {
+}
+
+class XWindowImp: WindowImp {
+    lazy var display = Display()
+    lazy var winid = Drawable()
+    lazy var gc = GC()
+    
+    override func deviceRect(_ rect: CGRect) {
+        xDrawRectangle(display: display, winid: winid, gc: gc, x: rect.origin.x, y: rect.origin.y, w: rect.width, h: rect.height)
+    }
+    
+    func xDrawRectangle(display: Display, winid: Drawable, gc: GC, x: CGFloat, y: CGFloat, w: CGFloat, h: CGFloat) {
+        print("X Window draw rect (\(x), \(y), \(w), \(h)) on screen.")
+    }
+}
+
+class HPS {
+}
+
+class PMWindowImp: WindowImp {
+    lazy var hps = HPS()
+    
+    override func deviceRect(_ rect: CGRect) {
+        print("PM draw rect \(rect)")
+    }
 }
