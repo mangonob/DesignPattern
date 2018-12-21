@@ -8,4 +8,4 @@
 
 import Foundation
 
-SingletonRoutine.perform()
+BridgeRoutine.perform()

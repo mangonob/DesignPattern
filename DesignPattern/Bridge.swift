@@ -13,6 +13,17 @@ class View {
     }
 }
 
+class WindowSystemFactory {
+    static var shared = WindowSystemFactory()
+    
+    private init() {
+    }
+    
+    func makeWindowImp() -> WindowImp {
+        return XWindowImp()
+    }
+}
+
 class Window {
     private (set) var view: View
     
@@ -23,7 +34,7 @@ class Window {
     internal var _imp: WindowImp!
     var imp: WindowImp {
         if _imp == nil {
-            _imp = WindowImp()
+            _imp = WindowSystemFactory.shared.makeWindowImp()
         }
         return _imp
     }
@@ -116,5 +127,12 @@ class PMWindowImp: WindowImp {
     
     override func deviceRect(_ rect: CGRect) {
         print("PM draw rect \(rect)")
+    }
+}
+
+struct BridgeRoutine: Routine {
+    static func perform() {
+        let window = ApplicationWindow(View())
+        window.drawRect(start: .init(x: 4, y: 8), end: .init(x: 10, y: 100))
     }
 }
