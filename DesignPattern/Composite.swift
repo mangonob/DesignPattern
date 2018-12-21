@@ -8,35 +8,112 @@
 
 import Foundation
 
-protocol Glyph: AnyObject {
-    func insert(_ subGlyph: Glyph)
-    func remove(_ subGlyph: Glyph)
-    var parent: Glyph? { get set }
-    func child(at index: Int) -> Glyph?
+class Equipment: Iteratable {
+    typealias Watt = Double
+    typealias Currency = Double
+
+    var name: String = "Equipment"
+    
+    func power() -> Watt { return 0 }
+    
+    func netPrice() -> Currency { return 0 }
+    
+    func discountPrice() -> Currency { return 0 }
+    
+    func add(_ equipment: Equipment) { }
+    
+    func remove(_ equipment: Equipment) { }
+    
+    typealias Element = Equipment
+    
+    func createIterator() -> AnyIterator<Equipment> { return AnyIterator(NullIterator<Equipment>()) }
+    
+    init(name: String) {
+        self.name = name
+    }
 }
 
-class BaseGlyph: Glyph {
-    private(set) var children = [Glyph]()
-    
-    var parent: Glyph?
+class FloppyDisk: Equipment {
+    override func netPrice() -> Equipment.Currency {
+        return 42
+    }
+}
 
-    func insert(_ subGlyph: Glyph) {
-        guard !children.contains(where: { $0 === subGlyph }) else { return }
-        
-        subGlyph.parent?.remove(subGlyph)
-        subGlyph.parent = self
-        children.append(subGlyph)
+class CompositeEquipment: Equipment {
+    private lazy var equipments = [Equipment]()
+    
+    override func add(_ equipment: Equipment) {
+        guard !equipments.contains(where: { $0 === equipment }) else { return }
+        equipments.append(equipment)
     }
     
-    func remove(_ subGlyph: Glyph) {
-        guard children.contains(where: { $0 === subGlyph }) else { return }
-        
-        children.removeAll { $0 === subGlyph }
-        subGlyph.parent = nil
+    override func remove(_ equipment: Equipment) {
+        equipments.removeAll { $0 === equipment }
     }
     
-    func child(at index: Int) -> Glyph? {
-        guard index > 0 && index < children.count else { return nil }
-        return children[index]
+    override func createIterator() -> AnyIterator<Equipment> {
+        return AnyIterator(ListIterator(equipments))
+    }
+    
+    override func netPrice() -> Currency {
+        let iterator = createIterator()
+        iterator.first()
+        
+        var total: Currency = 0
+        
+        while !iterator.isDone() {
+            defer {
+                iterator.next()
+            }
+            
+            guard let item = iterator.currentItem() else {
+                continue
+            }
+            
+            total += item.netPrice()
+        }
+        
+        return total
+    }
+}
+
+class Chassis: CompositeEquipment {
+    override func netPrice() -> CompositeEquipment.Currency {
+        return 12.4 + super.netPrice()
+    }
+}
+
+class Cabinet: CompositeEquipment {
+    override func netPrice() -> CompositeEquipment.Currency {
+        return 100 + super.netPrice()
+    }
+}
+
+class Bus: CompositeEquipment {
+    override func netPrice() -> CompositeEquipment.Currency {
+        return 37 + super.netPrice()
+    }
+}
+
+class Card: Equipment {
+    override func netPrice() -> Equipment.Currency {
+        return 99
+    }
+}
+
+struct CompositeRoutine: Routine {
+    static func perform() {
+        let cabinet = Cabinet(name: "PC Cabinet")
+        let chassis = Chassis(name: "PC Chassis")
+        
+        cabinet.add(chassis)
+        
+        let bus = Bus(name: "MCA Bus")
+        bus.add(Card(name: "16Mbs Token Ring"))
+        
+        chassis.add(bus)
+        chassis.add(FloppyDisk(name: "3.5 in Floppy"))
+        
+        print(chassis.netPrice())
     }
 }

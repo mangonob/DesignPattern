@@ -24,14 +24,6 @@ protocol Iteratable {
     func createIterator() -> IteratorType
 }
 
-extension BaseGlyph: Iteratable {
-    typealias Element = Glyph
-
-    func createIterator() -> AnyIterator<Element> {
-        return AnyIterator(ListIterator(children))
-    }
-}
-
 struct AnyIterator<E>: Iterator {
     typealias Element = E
 
@@ -117,18 +109,25 @@ class PreorderIterator<T: Iteratable>: Iterator {
     }
 }
 
+class NullIterator<T>: Iterator {
+    typealias Element = T
+    
+    func first() {
+    }
+    
+    func next() {
+    }
+    
+    func currentItem() -> T? {
+        return nil
+    }
+    
+    func isDone() -> Bool {
+        return true
+    }
+}
+
 struct IteratorRoutine: Routine {
     static func perform() {
-        let glyph = BaseGlyph()
-        glyph.insert(BaseGlyph())
-        glyph.insert(BaseGlyph())
-        
-        let iterator = glyph.createIterator()
-        
-        iterator.first()
-        while !iterator.isDone() {
-            print(iterator.currentItem() as Any)
-            iterator.next()
-        }
     }
 }
