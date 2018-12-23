@@ -8,51 +8,58 @@
 
 import Foundation
 
-class Component {
-    func description() -> String {
-        return "Component"
+class VisualComponent {
+    func draw() {
     }
-}
-
-class ConcreteComponent: Component {
-    override func description() -> String {
-        return "ConcreteComponent"
-    }
-}
-
-class Decorator: Component {
-    var component: Component
     
-    init(_ component: Component) {
+    func resize() {
+    }
+}
+
+class Decorator: VisualComponent {
+    private var component: VisualComponent
+    
+    init(_ component: VisualComponent) {
         self.component = component
     }
-}
-
-class DecoratorA: Decorator {
-    override func description() -> String {
-        return "<\(component.description())> + A"
+    
+    override func draw() {
+        component.draw()
+    }
+    
+    override func resize() {
+        component.resize()
     }
 }
 
-class DecoratorB: Decorator {
-    override func description() -> String {
-        return "<\(component.description())> + B"
+class BorderDecorator: Decorator {
+    private var border: CGFloat
+    
+    init(_ component: VisualComponent, border: CGFloat = 0) {
+        self.border = border
+        super.init(component)
+    }
+    
+    override func draw() {
+        print("[@(\(border)) ")
+        super.draw()
+        print(" ]")
     }
 }
 
-class DecoratorC: Decorator {
-    override func description() -> String {
-        return "<\(component.description())> + C"
+class Button: VisualComponent {
+    var title: String = "Button"
+    
+    override func draw() {
+        print(title)
     }
 }
 
 class DecoratorRoutine: Routine {
     static func perform() {
-        let component = ConcreteComponent()
-        let a = DecoratorA(component)
-        let c = DecoratorC(a)
-        let b = DecoratorB(c)
-        
-        print(b.description())
+        let button = Button()
+        button.title = "Title for button"
+        let borderButton = BorderDecorator(button, border: 10.4)
+        borderButton.draw()
     }
 }

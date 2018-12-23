@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Equipment: Iteratable {
+class Equipment: Iteratable, CustomStringConvertible {
     typealias Watt = Double
     typealias Currency = Double
 
@@ -30,6 +30,10 @@ class Equipment: Iteratable {
     
     init(name: String) {
         self.name = name
+    }
+    
+    var description: String {
+        return "\(name) ¥\(netPrice())"
     }
 }
 
@@ -75,6 +79,27 @@ class CompositeEquipment: Equipment {
         
         return total
     }
+    
+    override var description: String {
+        var descriptions = [String]()
+        
+        let iterator = createIterator()
+        iterator.first()
+        
+        while !iterator.isDone() {
+            defer {
+                iterator.next()
+            }
+            
+            guard let item = iterator.currentItem() else {
+                continue
+            }
+            
+            descriptions.append(item.description)
+        }
+        
+        return "[\(name): \(descriptions.joined(separator: ", "))]"
+    }
 }
 
 class Chassis: CompositeEquipment {
@@ -114,6 +139,7 @@ struct CompositeRoutine: Routine {
         chassis.add(bus)
         chassis.add(FloppyDisk(name: "3.5 in Floppy"))
         
-        print(chassis.netPrice())
+        print(cabinet)
+        print(cabinet.netPrice())
     }
 }

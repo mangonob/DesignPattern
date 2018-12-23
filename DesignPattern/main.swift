@@ -8,4 +8,4 @@
 
 import Foundation
 
-CompositeRoutine.perform()
+DecoratorRoutine.perform()
