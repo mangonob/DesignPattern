@@ -8,4 +8,4 @@
 
 import Foundation
 
-DecoratorRoutine.perform()
+FlyweightRoutine.perform()
