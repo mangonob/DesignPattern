@@ -34,16 +34,12 @@ class Shape {
 }
 
 class TextView {
-    var origin: CGPoint {
-        return .zero
-    }
+    var origin: CGPoint = .zero
     
-    var extent: CGSize {
-        return .zero
-    }
+    var extent: CGSize = .zero
     
     var isEmpty: Bool {
-        return false
+        return extent == .zero
     }
 }
 
@@ -68,5 +64,16 @@ class TextShape: Shape {
     
     var isEmpty: Bool {
         return textView.isEmpty
+    }
+}
+
+struct AdapterRoutine: Routine {
+    static func perform() {
+        let textView = TextView()
+        textView.origin = .init(x: 10, y: 20)
+        textView.extent = .init(width: 30, height: 40)
+        let textShape = TextShape(textView)
+        print("BL \(textShape.bottomLeft)" )
+        print("TR \(textShape.topRight)")
     }
 }
