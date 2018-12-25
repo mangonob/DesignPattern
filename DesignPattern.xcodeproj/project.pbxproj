@@ -25,6 +25,7 @@
 		4A94102321C8FD2E007D9DD6 /* Prototype.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A94102221C8FD2E007D9DD6 /* Prototype.swift */; };
 		4ABAE42021CA16EB00C08A39 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABAE41F21CA16EB00C08A39 /* Singleton.swift */; };
 		4ABAE42221CA47CD00C08A39 /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABAE42121CA47CD00C08A39 /* Adapter.swift */; };
+		4AF91B3621D213A2002E0B00 /* ChainOfResponsibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF91B3521D213A2002E0B00 /* ChainOfResponsibility.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -59,6 +60,7 @@
 		4A94102221C8FD2E007D9DD6 /* Prototype.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prototype.swift; sourceTree = "<group>"; };
 		4ABAE41F21CA16EB00C08A39 /* Singleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
 		4ABAE42121CA47CD00C08A39 /* Adapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adapter.swift; sourceTree = "<group>"; };
+		4AF91B3521D213A2002E0B00 /* ChainOfResponsibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainOfResponsibility.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				4A51B4F821CFE93000092DD9 /* Facade.swift */,
 				4A67B13021D0BB56003192F7 /* Flyweight.swift */,
 				4A5C2E3A21D12BD500D58A74 /* Proxy.swift */,
+				4AF91B3521D213A2002E0B00 /* ChainOfResponsibility.swift */,
 				4A04E64E21B7AF5B002E91B7 /* main.swift */,
 			);
 			path = DesignPattern;
@@ -182,6 +185,7 @@
 				4A04E65B21B7C5A6002E91B7 /* Protocol.swift in Sources */,
 				4A5C2E3B21D12BD500D58A74 /* Proxy.swift in Sources */,
 				4A0EE90121CAA60D002707C6 /* Bridge.swift in Sources */,
+				4AF91B3621D213A2002E0B00 /* ChainOfResponsibility.swift in Sources */,
 				4A94102321C8FD2E007D9DD6 /* Prototype.swift in Sources */,
 				4A51B4F921CFE93000092DD9 /* Facade.swift in Sources */,
 				4A12EBE621B928B10088C493 /* Iterator.swift in Sources */,

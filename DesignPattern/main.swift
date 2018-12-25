@@ -8,4 +8,4 @@
 
 import Foundation
 
-AdapterRoutine.perform()
+ChainOfResponsibilityRoutine.perform()
