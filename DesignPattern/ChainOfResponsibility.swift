@@ -53,7 +53,7 @@ class ButtonWidget: Widget {
             return
         }
         
-        print("\(self) handle help at \(Date()).")
+        print("\(self) handle help")
     }
 }
 
@@ -64,13 +64,13 @@ class Dialog: Widget {
             return
         }
         
-        print("\(self) handle help at \(Date()).")
+        print("\(self) handle help")
     }
 }
 
 class Application: HelpHandler {
     override func handleHelp() {
-        print("\(self) handle help at \(Date())")
+        print("\(self) handle help")
     }
 }
 
