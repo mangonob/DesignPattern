@@ -72,6 +72,13 @@ class Application: HelpHandler {
     override func handleHelp() {
         print("\(self) handle help")
     }
+    
+    private (set) var documents = [Document]()
+    
+    func add(document: Document) {
+        guard !documents.contains(where: { $0 === document }) else { return }
+        documents.append(document)
+    }
 }
 
 struct ChainOfResponsibilityRoutine: Routine {

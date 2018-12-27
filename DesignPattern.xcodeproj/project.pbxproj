@@ -103,7 +103,6 @@
 				4ABAE41F21CA16EB00C08A39 /* Singleton.swift */,
 				4ABAE42121CA47CD00C08A39 /* Adapter.swift */,
 				4A0EE90021CAA60D002707C6 /* Bridge.swift */,
-				4A12EBE321B922060088C493 /* Command.swift */,
 				4A12EBE521B928B10088C493 /* Iterator.swift */,
 				4A8DC41821BA6B7500B972FA /* Composite.swift */,
 				4A04E65C21B7C6E2002E91B7 /* Decorator.swift */,
@@ -111,6 +110,7 @@
 				4A67B13021D0BB56003192F7 /* Flyweight.swift */,
 				4A5C2E3A21D12BD500D58A74 /* Proxy.swift */,
 				4AF91B3521D213A2002E0B00 /* ChainOfResponsibility.swift */,
+				4A12EBE321B922060088C493 /* Command.swift */,
 				4A04E64E21B7AF5B002E91B7 /* main.swift */,
 			);
 			path = DesignPattern;
