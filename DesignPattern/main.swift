@@ -8,4 +8,4 @@
 
 import Foundation
 
-CommandRoutine.perform()
+InterpreterRoutine.perform()
