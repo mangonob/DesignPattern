@@ -41,12 +41,13 @@ class OpenCommand: Command {
     
     func askUser() -> String {
         while true {
+            FileHandle.standardOutput.write("Please input name of document: ".data(using: .utf8)!)
             guard let input = String(data: FileHandle.standardInput.availableData, encoding: .utf8),
                 !input.isEmpty else {
                     continue
             }
             
-            return input
+            return input.replacingOccurrences(of: "\n", with: "")
         }
     }
     
@@ -106,5 +107,15 @@ class MacroCommand: Command {
 
 struct CommandRoutine: Routine {
     static func perform() {
+        let application = Application()
+        let open = OpenCommand(application: application)
+        open.execute()
+        
+        guard let document = application.documents.last else {
+            return
+        }
+        
+        let command = PasteCommand(document: document)
+        command.execute()
     }
 }

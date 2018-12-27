@@ -8,4 +8,4 @@
 
 import Foundation
 
-ChainOfResponsibilityRoutine.perform()
+CommandRoutine.perform()
