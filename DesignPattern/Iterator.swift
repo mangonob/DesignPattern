@@ -83,15 +83,15 @@ class ListIterator<E>: Iterator {
     }
 }
 
-class PreorderIterator<T: Iteratable>: Iterator {
-    typealias Element = T.Element
+class PreorderIterator<E>: Iterator {
+    typealias Element = E
     
-    let root: T
-    private var iterators: [AnyIterator<Element>]
-
-    init(_ root: T) {
+    let root: Element
+    private var children: [AnyIterator<Element>]
+    
+    init(_ root: Element, children: [AnyIterator<Element>]) {
         self.root = root
-        iterators = [AnyIterator<Element>]()
+        self.children = children
     }
     
     func first() {
@@ -100,7 +100,7 @@ class PreorderIterator<T: Iteratable>: Iterator {
     func next() {
     }
     
-    func currentItem() -> T.Element? {
+    func currentItem() -> Element? {
         return nil
     }
     
@@ -127,7 +127,23 @@ class NullIterator<T>: Iterator {
     }
 }
 
+extension AnyIterator {
+    /** Internal iterator */
+    func traverser(_ handler: (E) -> Void) {
+        first()
+        
+        while !isDone() {
+            if let item = currentItem() {
+                handler(item)
+            }
+            
+            next()
+        }
+    }
+}
+
 struct IteratorRoutine: Routine {
     static func perform() {
+        AnyIterator(ListIterator([234,21234,12,34,124,123,4])).traverser { print($0) }
     }
 }
