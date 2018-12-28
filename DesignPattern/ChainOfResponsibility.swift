@@ -31,7 +31,7 @@ class HelpHandler {
 class Widget: HelpHandler {
     var isEnable: Bool = true
     private (set) var parent: Widget?
-    var director: DialogDirector?
+    weak var director: DialogDirector?
 
     init() {
     }
@@ -67,6 +67,10 @@ class ButtonWidget: Widget {
         }
         
         print("\(self) handle help")
+    }
+    
+    override func handleMouse(_ event: MouseEvent) {
+        change()
     }
 }
 
