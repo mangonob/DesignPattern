@@ -31,22 +31,35 @@ class HelpHandler {
 class Widget: HelpHandler {
     var isEnable: Bool = true
     private (set) var parent: Widget?
+    var director: DialogDirector?
+
+    init() {
+    }
     
     init(_ parent: Widget?) {
         super.init(parent)
         self.parent = parent
     }
-    
+
     override init(_ helpHandler: HelpHandler?) {
         super.init(helpHandler)
     }
-
+    
     override func hasHelp() -> Bool {
         return isEnable
+    }
+    
+    func handleMouse(_ event: MouseEvent) {
+    }
+    
+    func change() {
+        director?.widgetChanged(self)
     }
 }
 
 class ButtonWidget: Widget {
+    var text: String?
+    
     override func handleHelp() {
         guard hasHelp() else {
             super.handleHelp()
