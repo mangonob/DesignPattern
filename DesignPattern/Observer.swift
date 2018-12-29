@@ -8,6 +8,14 @@
 
 import Foundation
 
+struct Weak<E: AnyObject> {
+    weak var base: E?
+    
+    init(_ base: E) {
+        self.base = base
+    }
+}
+
 protocol Subject: AnyObject {
     func registerObserver(_ observer: Observer)
     func resignObserver(_ observer: Observer)
@@ -19,22 +27,22 @@ protocol Observer: AnyObject {
 }
 
 class SubjectCenter: Subject {
-    private var observers = [Observer]()
+    private var observers = [Weak<AnyObject>]()
 
     func registerObserver(_ observer: Observer) {
-        guard !observers.contains(where: { $0 === observer }) else {
+        guard !observers.contains(where: { $0.base === observer }) else {
             return
         }
         
-        observers.append(observer)
+        observers.append(Weak(observer))
     }
 
     func resignObserver(_ observer: Observer) {
-        observers.removeAll { $0 === observer }
+        observers.removeAll { $0.base === observer }
     }
     
     func notifyObserver() {
-        observers.forEach { $0.update(subject: self, userInfo: ["createdAt": Date()]) }
+        observers.forEach { ($0.base as? Observer)?.update(subject: self, userInfo: ["createdAt": Date()]) }
     }
 }
 

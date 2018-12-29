@@ -22,6 +22,10 @@ class Graphic {
         return .zero
     }
     
+    func move(_ translation: CGPoint) {
+        print("\(self) move \(translation)")
+    }
+    
     func load(_ from: FileHandle) {
     }
     

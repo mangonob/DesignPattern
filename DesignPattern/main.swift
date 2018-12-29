@@ -8,4 +8,4 @@
 
 import Foundation
 
-MediatorRoutine.perform()
+ObserverRoutine.perform()
