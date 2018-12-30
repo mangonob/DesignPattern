@@ -11,6 +11,23 @@ import Foundation
 class View {
     func drawOn(_ window: Window) {
     }
+    
+    func setFocus() {
+        print("Focus \(self)")
+    }
+    
+    func doDisplay() {
+    }
+    
+    func resetFocus() {
+        print("Reset focus \(self)")
+    }
+    
+    func display() {
+        setFocus()
+        doDisplay()
+        resetFocus()
+    }
 }
 
 class WindowSystemFactory {
