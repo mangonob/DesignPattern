@@ -29,7 +29,7 @@ class Composition {
         let shrink = [CGPoint]()
         
         _ = compositor?.compose(natural: natural, stretch: stretch, shrink: shrink,
-                            componentCount: componentCount, lineWidth: linkWidth, breaks: lineBreaks)
+                                componentCount: componentCount, lineWidth: linkWidth, breaks: lineBreaks)
     }
 }
 

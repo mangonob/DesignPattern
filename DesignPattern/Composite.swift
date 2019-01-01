@@ -24,6 +24,9 @@ class Equipment: Iteratable, CustomStringConvertible {
     
     func remove(_ equipment: Equipment) { }
     
+    func accept(_ visitor: EquipmentVisitor) {
+    }
+
     typealias Element = Equipment
     
     func createIterator() -> AnyIterator<Equipment> { return AnyIterator(NullIterator<Equipment>()) }
@@ -40,6 +43,10 @@ class Equipment: Iteratable, CustomStringConvertible {
 class FloppyDisk: Equipment {
     override func netPrice() -> Equipment.Currency {
         return 42
+    }
+    
+    override func accept(_ visitor: EquipmentVisitor) {
+        visitor.visit(self)
     }
 }
 
@@ -106,6 +113,11 @@ class Chassis: CompositeEquipment {
     override func netPrice() -> CompositeEquipment.Currency {
         return 12.4 + super.netPrice()
     }
+    
+    override func accept(_ visitor: EquipmentVisitor) {
+        createIterator().traverser { $0.accept(visitor) }
+        visitor.visit(self)
+    }
 }
 
 class Cabinet: CompositeEquipment {
@@ -118,11 +130,19 @@ class Bus: CompositeEquipment {
     override func netPrice() -> CompositeEquipment.Currency {
         return 37 + super.netPrice()
     }
+    
+    override func accept(_ visitor: EquipmentVisitor) {
+        visitor.visit(self)
+    }
 }
 
 class Card: Equipment {
     override func netPrice() -> Equipment.Currency {
         return 99
+    }
+    
+    override func accept(_ visitor: EquipmentVisitor) {
+        visitor.visit(self)
     }
 }
 
