@@ -46,7 +46,7 @@ class MazePrototypeFactory: MazeFactory {
 struct PrototypeRoutine: Routine {
     static func perform() {
         let game = MazeGame()
-        let prototypeFactory = MazePrototypeFactory(maze: Maze(), room: RoomWithABoom(0), wall: BoomedWall(), door: Door())
+        let prototypeFactory = MazePrototypeFactory(maze: Maze(), room: RoomWithABoom(0), wall: BombedWall(), door: Door())
         let maze = game.createMaze(factory: prototypeFactory)
         print(maze)
     }
