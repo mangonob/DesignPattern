@@ -8,11 +8,15 @@
 
 import Foundation
 
-class MapSite: NSObject, NSCopying {
+class MapSite: Copyable, CustomStringConvertible {
     func enter() { }
     
-    func copy(with zone: NSZone? = nil) -> Any {
-        return classForCoder.alloc()
+    func clone() -> Self {
+        return cast(MapSite())
+    }
+    
+    var description: String {
+        return "\(Mirror(reflecting: self).subjectType)"
     }
 }
 
@@ -24,7 +28,7 @@ class Room: MapSite {
         case west
     }
     
-    @objc private (set) var roomNo: Int
+    var roomNo: Int
     
     init(_ roomNo: Int) {
         self.roomNo = roomNo
@@ -40,15 +44,19 @@ class Room: MapSite {
         return sides[side.rawValue]
     }
     
-    override func copy(with zone: NSZone?) -> Any {
-        let room = super.copy(with: zone) as! Room
-        room.roomNo = roomNo
-        room.sides = sides
-        return room
+    override func clone() -> Self {
+        return cast(Room(roomNo))
+    }
+    
+    override var description: String {
+        return "\(Mirror(reflecting: self).subjectType)<\(roomNo)>"
     }
 }
 
 class Wall: MapSite {
+    override func clone() -> Self {
+        return cast(Wall())
+    }
 }
 
 class Door: MapSite {
@@ -71,15 +79,16 @@ class Door: MapSite {
         }
     }
     
-    override func copy(with zone: NSZone?) -> Any {
-        let door = super.copy(with: zone) as! Door
-        door.room1 = room1
-        door.room2 = room2
-        return door
+    override func clone() -> Self {
+        return cast(Door(room1: room1, room2: room2))
+    }
+    
+    override var description: String {
+        return "\(super.description)<\(room1?.roomNo.description ?? "_"), \(room2?.roomNo.description ?? "_")>"
     }
 }
 
-class Maze: NSObject, NSCopying {
+class Maze: Copyable, CustomStringConvertible {
     private var rooms = [Int: Room]()
     
     func addRoom(_ room: Room) {
@@ -90,14 +99,14 @@ class Maze: NSObject, NSCopying {
         return rooms[no]
     }
     
-    func copy(with zone: NSZone? = nil) -> Any {
-        let maze = classForCoder.alloc() as! Maze
+    func clone() -> Self {
+        let maze = Maze()
         maze.rooms = rooms
-        return maze
+        return cast(maze)
     }
     
-    override var description: String {
-        return "\(super.description)[Rooms: \(rooms)]"
+    var description: String {
+        return "\(Mirror(reflecting: self).subjectType): \(rooms)"
     }
 }
 
@@ -194,6 +203,9 @@ class EnchantRoom: Room {
 }
 
 class DoorNeedingSpell: Door {
+    override func clone() -> Self {
+        return cast(DoorNeedingSpell(room1: room1, room2: room2))
+    }
 }
 
 class EnchantMazeFactory: MazeFactory {
@@ -211,9 +223,15 @@ class EnchantMazeFactory: MazeFactory {
 }
 
 class RoomWithABoom: Room {
+    override func clone() -> Self {
+        return cast(RoomWithABoom(roomNo))
+    }
 }
 
 class BombedWall: Wall {
+    override func clone() -> Self {
+        return cast(BombedWall())
+    }
 }
 
 class BombedMazeFactory: MazeFactory {

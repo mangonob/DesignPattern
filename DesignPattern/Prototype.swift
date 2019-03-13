@@ -8,6 +8,18 @@
 
 import Foundation
 
+protocol Copyable {
+    func clone() -> Self
+}
+
+func cast<T: Any>(_ value: Any) -> T {
+    if let cast = value as? T {
+        return cast
+    } else {
+        fatalError("Can't cast \(value) to \(T.self).")
+    }
+}
+
 class MazePrototypeFactory: MazeFactory {
     private var mazePrototype: Maze
     private var roomPrototype: Room
@@ -22,21 +34,21 @@ class MazePrototypeFactory: MazeFactory {
     }
     
     override func makeMaze() -> Maze {
-        return mazePrototype.copy() as! Maze
+        return mazePrototype.clone()
     }
     
     override func makeRoom(withNo no: Int) -> Room {
-        let room = roomPrototype.copy() as! Room
-        room.setValue(no, forKey: "roomNo")
+        let room = roomPrototype.clone()
+        room.roomNo = no
         return room
     }
     
     override func makeWall() -> Wall {
-        return wallPrototype.copy() as! Wall
+        return wallPrototype.clone()
     }
     
     override func makeDoor(room1: Room?, room2: Room?) -> Door {
-        let door = doorPrototype.copy() as! Door
+        let door = doorPrototype.clone()
         door.room1 = room1
         door.room2 = room2
         return door

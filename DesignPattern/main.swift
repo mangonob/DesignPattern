@@ -8,4 +8,4 @@
 
 import Foundation
 
-FactoryMethodRoutine.perform()
+PrototypeRoutine.perform()
