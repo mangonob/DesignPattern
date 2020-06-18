@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		06CA215F249B396A00551AA3 /* Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06CA215E249B396A00551AA3 /* Sort.swift */; };
 		4A04E64F21B7AF5B002E91B7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04E64E21B7AF5B002E91B7 /* main.swift */; };
 		4A04E65721B7B221002E91B7 /* Strategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04E65621B7B221002E91B7 /* Strategy.swift */; };
 		4A04E65921B7BE4A002E91B7 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04E65821B7BE4A002E91B7 /* Observer.swift */; };
@@ -47,6 +48,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		06CA215E249B396A00551AA3 /* Sort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sort.swift; sourceTree = "<group>"; };
 		4A04E64B21B7AF5B002E91B7 /* DesignPattern */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DesignPattern; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A04E64E21B7AF5B002E91B7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		4A04E65621B7B221002E91B7 /* Strategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strategy.swift; sourceTree = "<group>"; };
@@ -86,6 +88,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		06CA215D249B394600551AA3 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				06CA215E249B396A00551AA3 /* Sort.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
 		4A04E64221B7AF5B002E91B7 = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +115,7 @@
 		4A04E64D21B7AF5B002E91B7 /* DesignPattern */ = {
 			isa = PBXGroup;
 			children = (
+				06CA215D249B394600551AA3 /* Application */,
 				4A04E65A21B7C5A6002E91B7 /* Protocol.swift */,
 				4A12EBE121B914C60088C493 /* AbstractFactory.swift */,
 				4A64F6B721C69E00002D7D51 /* Builder.swift */,
@@ -162,7 +173,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1010;
-				ORGANIZATIONNAME = BaiYiYuan;
+				ORGANIZATIONNAME = Trinity;
 				TargetAttributes = {
 					4A04E64A21B7AF5B002E91B7 = {
 						CreatedOnToolsVersion = 10.1;
@@ -216,6 +227,7 @@
 				4A12EBE421B922060088C493 /* Command.swift in Sources */,
 				4A9AC8F221DA8AD1003D4302 /* Visitor.swift in Sources */,
 				4ABAE42221CA47CD00C08A39 /* Adapter.swift in Sources */,
+				06CA215F249B396A00551AA3 /* Sort.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
